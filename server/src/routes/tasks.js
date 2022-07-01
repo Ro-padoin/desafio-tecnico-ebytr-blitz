@@ -1,10 +1,13 @@
 const express = require('express');
-const users = require('../controllers/usersController');
-const signupRoute = express.Router();
+const tasks = require('../controllers/tasksController');
+const tasksRoute = express.Router();
 require('dotenv').config();
 
-signupRoute.use(express.json());
+tasksRoute.use(express.json());
 
-signupRoute.post('/', users.createUser);
+tasksRoute.get('/', tasks.getAllTasks)
+tasksRoute.post('/', tasks.createTask);
+tasksRoute.put('/:id', tasks.updateTask);
+tasksRoute.delete('/:id', tasks.deleteTask);
 
-module.exports = signupRoute;
+module.exports = tasksRoute;
