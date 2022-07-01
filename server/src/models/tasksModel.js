@@ -12,15 +12,15 @@ const getTaskById = async (id) => {
   return taskById;
 };
 
-const createTask = async (task) => {
-  const { title, description } = task;
+const createTask = async (taskContent) => {
+  const { title, description } = taskContent;
   const query = `INSERT INTO ScheduleDatabase.tasks (title, description) VALUES (?);`;
   const [taskcreated] = await connection.execute(query, [title, description]);
   return taskcreated.insertId; 
 };
 
-const updateTask = async (task) => {
-  const { id, title, description  } = task;
+const updateTask = async (taskContent) => {
+  const { id, title, description  } = taskContent;
   const query = `UPDATE ScheduleDatabase.tasks SET title = ?, description = ? WHERE id = ?;`;
   const [taskUpdated] = await connection.execute(query, [title, description, id]);
   return taskUpdated.affectedRows;
