@@ -1,0 +1,9 @@
+{
+  "trailingComma": "all",
+  "endOfLine": "auto",
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "tabWidth": 2,
+  "bracketSpacing": true,
+  "proseWrap": "preserve"
+}
