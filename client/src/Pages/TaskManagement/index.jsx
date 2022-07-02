@@ -1,71 +1,100 @@
-import { useEffect, useState } from 'react';
-import axiosInstances from '../../helpers/axiosInstance';
 import TaskList from '../../components/TaskList';
-import { Navigate } from 'react-router-dom';
+// import axiosInstances from '../../helpers/axiosInstance';
+// import { Navigate } from 'react-router-dom';
+
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+function Copyright(props) {
+  return (
+    <Typography
+      variant='body2'
+      color='text.secondary'
+      align='center'
+      {...props}
+    >
+      {'Copyright © '}
+      <Link color='inherit' href='https://mui.com/'>
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const theme = createTheme();
 
 function TaskManagement() {
-  const [task, setTask] = useState({
-    title: '',
-    description: '',
-  });
-  const [allTasks, setAllTasks] = useState([]);
-  const [erro, setErro] = useState();
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      title: data.get('title'),
+      description: data.get('description'),
+    });
   };
-
-  const getTask = async () => {
-    try {
-      const data = await axiosInstances.get('/tasks');
-      setAllTasks([...data]);
-    } catch (error) {
-      setErro(error?.response?.data?.message || 'Mensagem qualquer');
-      console.log(erro);
-    }
-  };
-  useEffect(() => getTask(), []);
 
   return (
-    <section>
-      <form onClick={onSubmit}>
-        <label htmlFor='title'>
-          Title:
-          <input
-            type='text'
-            id='title'
-            name='title'
-            value={task.title}
-            onChange={({ target }) =>
-              setTask((prevState) => ({
-                ...prevState,
-                title: target.value,
-              }))
-            }
-            required
-          />
-        </label>
-        <label htmlFor='description'>
-          Description:
-          <input
-            type='text'
-            id='description'
-            name='description'
-            value={task.description}
-            onChange={({ target }) =>
-              setTask((prevState) => ({
-                ...prevState,
-                description: target.value,
-              }))
-            }
-          />
-        </label>
-        <button type='submit' onClick={onSubmit}>
-          Cadastrar
-        </button>
-      </form>
-      <TaskList tasks={allTasks} />
-    </section>
+    <ThemeProvider theme={theme}>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component='h1' variant='h5'>
+            Tasks
+          </Typography>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              id='title'
+              label='Title'
+              name='title'
+              autoFocus
+            />
+            <TextField
+              margin='normal'
+              fullWidth
+              name='Description'
+              label='Description'
+              type='Description'
+              id='Description'
+              autoComplete='current-password'
+            />
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Register
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+      <TaskList />;
+      <Copyright sx={{ mt: 8, mb: 4 }} />
+    </ThemeProvider>
   );
 }
 

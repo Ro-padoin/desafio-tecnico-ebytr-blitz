@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
-function TaskList({ tasks }) {
+function TaskList() {
+  const tasks = [];
   return (
     <ul>
       {tasks.map((task) => (
