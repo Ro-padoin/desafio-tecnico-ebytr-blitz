@@ -1,11 +1,12 @@
 import React from 'react';
+import Footer from '../../components/Footer';
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import './style.css';
 
 function HomePage() {
   return (
-    <div>
+    <section>
       <h1>Bem vindos a Productivity Boosting Apllication!</h1>
       <p>
         Essa aplicação tem por objetivo auxiliá-los no planejamento de suas
@@ -33,7 +34,8 @@ function HomePage() {
           <SignUp />
         </div>
       </section>
-    </div>
+      <Footer />
+    </section>
   );
 }
 

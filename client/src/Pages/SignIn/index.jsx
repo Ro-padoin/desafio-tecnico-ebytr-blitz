@@ -22,12 +22,11 @@ function SignIn() {
 
   const fetchApi = async (login) => {
     try {
-      const data = await axiosInstances.post('/signup', { ...login });
-      console.log(data);
+      const { token } = await axiosInstances.post('/signin', { ...login });
+      console.log(token, erro);
       navigate('/tasks');
     } catch (error) {
       setErro(error?.response?.data?.message || 'Mensagem qualquer');
-      console.log(erro);
     }
   };
 
@@ -39,10 +38,6 @@ function SignIn() {
       password: data.get('password'),
     };
     fetchApi(login);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (
@@ -118,8 +113,6 @@ function SignIn() {
   );
 }
 
-// encaminha os dados para a rota de auth/signin DB - post
-// DB controller --> Service --> Service cadastra o usuario e ja faz o login
-// Model tera uma funcao para cadastro e outra para login
+// context para salvar o token
 
 export default SignIn;

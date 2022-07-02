@@ -1,6 +1,6 @@
 const usersModel = require('../models/usersModel');
 const { StatusCodes } = require('http-status-codes');
-const generateToken = require('../../src/helpers/generateToken');
+const newToken = require('../../src/helpers/generateToken');
 
 const createUser = async (data) => {
 const { username, password } = data;
@@ -14,12 +14,13 @@ const login = async (userData) => {
   const { email, password } = userData;
   const userExists = await usersModel.getUserByEmail(email);
   if (!userExists) throw new Error({ status: StatusCodes.NOT_FOUND, message: 'User not found'});
-  if (userExists.email === email && userExists.password === password) await createToken(userExists);
+  // if (userExists.email === email && userExists.password === password) await createToken(userExists);
+  return createToken(userExists);
 };
 
-const createToken  = async (data) => {
+const createToken  = (data) => {
   const { _password, ...payload } = data;
-  const token = await generateToken(payload);
+  const token = newToken.generateToken(payload);
   return token;
 };
 
