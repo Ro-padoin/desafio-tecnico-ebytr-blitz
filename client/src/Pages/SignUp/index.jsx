@@ -70,7 +70,9 @@ function SignUp() {
           </ul>
         </label>
 
-        <button type='submit'>Enviar</button>
+        <button type='submit' onClick={onSubmit}>
+          Enviar
+        </button>
       </form>
       {error && <p>{error}</p>}
     </section>
