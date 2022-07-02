@@ -7,7 +7,8 @@ USE ScheduleDatabase;
 CREATE TABLE
     users (
         id INT NOT NULL auto_increment,
-        username VARCHAR(30) NOT NULL,
+        firstName VARCHAR(30) NOT NULL,
+        lastName VARCHAR(30) NOT NULL,
         password VARCHAR(15) NOT NULL,
         PRIMARY KEY(id)
     ) ENGINE = INNODB;
