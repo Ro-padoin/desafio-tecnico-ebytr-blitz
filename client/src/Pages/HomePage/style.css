@@ -1,0 +1,10 @@
+.container-home-page {
+  display: flex;
+  justify-content:space-around;
+  margin: 20px;
+  /* border: 3px solid black; */
+}
+.home-page-register {
+  display: flex;
+  /* border: 3px solid black; */
+}
