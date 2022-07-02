@@ -1,12 +1,14 @@
 const connection = require('./connection');
 
 const createUser = async (data) => {
-  const { username, password } = data;
-  const query = `INSERT INTO ScheduleDatabase.users (username, password) VALUES (?, ?);`;
-  const [userCreated] = await connection.execute(query, [username, password]);
+  const { firstName, lastName, email, password } = data;
+  const query = `INSERT INTO ScheduleDatabase.users (firstName, lastName, email, password) VALUES (?, ?, ?, ?);`;
+  const [userCreated] = await connection.execute(query, [firstName, lastName, email, password]);
   return {
     id: userCreated.insertId,
-    username,
+    firstName, 
+    lastName, 
+    email,
     password,
   }; 
 };
@@ -26,7 +28,7 @@ const getUserById = async (id) => {
 const getUserByEmail = async (email) => {
   const query = `SELECT * FROM ScheduleDatabase.users WHERE email = ? `;
   const [user] = await connection.execute(query, [email]);
-  return user; 
+  return user?.[0]; 
 };
 
 module.exports = {

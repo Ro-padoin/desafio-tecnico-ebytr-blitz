@@ -9,7 +9,8 @@ CREATE TABLE
         id INT NOT NULL auto_increment,
         firstName VARCHAR(30) NOT NULL,
         lastName VARCHAR(30) NOT NULL,
-        password VARCHAR(15) NOT NULL,
+        email VARCHAR(200) NOT NULL,
+        password VARCHAR(100) NOT NULL,
         PRIMARY KEY(id)
     ) ENGINE = INNODB;
 
