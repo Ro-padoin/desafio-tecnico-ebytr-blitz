@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SignIn from '../SignIn';
+import SignUp from '../SignUp';
+import './style.css';
 
 function HomePage() {
   return (
@@ -23,14 +26,16 @@ function HomePage() {
         Caso contrário, basta clicar em Já possuo cadastro e realizar o seu
         login.
       </p>
-      <Link to='/signup'>Quero me cadastrar</Link>
-      <Link to='/signin'>Ja possuo cadastro</Link>
+      <section className='container-home-page'>
+        <div className='home-page-register'>
+          <SignIn />
+        </div>
+        <div className='home-page-register'>
+          <SignUp />
+        </div>
+      </section>
     </div>
   );
 }
-
-// cadastro direciona para a rota /signup
-// login direciona para a rota/signin
-// tera um texto de boas vindas, objetivo da aplicação e links para se cadastrar.
 
 export default HomePage;
