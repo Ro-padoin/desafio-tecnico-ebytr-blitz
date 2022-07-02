@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axiosInstances from '../../helpers/axiosInstance';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,31 +12,33 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 function SignIn() {
+  const navigate = useNavigate();
+  const [erro, setErro] = React.useState();
+
+  const fetchApi = async (login) => {
+    try {
+      const data = await axiosInstances.post('/signup', { ...login });
+      console.log(data);
+      navigate('/tasks');
+    } catch (error) {
+      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+      console.log(erro);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const login = {
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+    fetchApi(login);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -110,7 +113,6 @@ function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
