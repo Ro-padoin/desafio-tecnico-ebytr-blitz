@@ -14,67 +14,81 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme();
 
 function TaskManagement() {
+  const [tasks, setTasks] = React.useState([]);
+  const titleRef = React.useRef();
+  const descriptionRef = React.useRef();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const newTask = {
+      title: data.get('title'),
+      description: data.get('description'),
+    };
+    setTasks((prevState) => [...prevState, newTask]);
     console.log({
       title: data.get('title'),
       description: data.get('description'),
     });
+    if (titleRef.current) titleRef.current.value = '';
+    if (descriptionRef.current) descriptionRef.current.value = '';
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component='h1' variant='h5'>
-            Tasks
-          </Typography>
+    <>
+      <ThemeProvider theme={theme}>
+        <Container component='main' maxWidth='xs'>
+          <CssBaseline />
           <Box
-            component='form'
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              id='title'
-              label='Title'
-              name='title'
-              autoFocus
-            />
-            <TextField
-              margin='normal'
-              fullWidth
-              name='Description'
-              label='Description'
-              type='Description'
-              id='Description'
-              autoComplete='current-password'
-            />
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              sx={{ mt: 3, mb: 2 }}
+            <Typography component='h1' variant='h5'>
+              Tasks
+            </Typography>
+            <Box
+              component='form'
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Register
-            </Button>
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='title'
+                label='Title'
+                name='title'
+                autoFocus
+                inputRef={titleRef}
+              />
+              <TextField
+                margin='normal'
+                fullWidth
+                name='description'
+                label='Description'
+                id='description'
+                autoComplete='current-password'
+                inputRef={descriptionRef}
+              />
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Register
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-      <TaskList />;
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
+      <TaskList tasks={tasks} />
+    </>
   );
 }
 
