@@ -4,6 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import axiosInstance from '../../helpers/axiosInstance';
@@ -22,6 +23,14 @@ export default function FormDialog({ open, setOpen, task }) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleDeletedTask = async () => {
+    try {
+      await axiosInstance.delete(`/tasks/${editedTask.id}`);
+    } catch (error) {
+      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+    }
   };
 
   const handleEditedTask = async () => {
@@ -76,7 +85,7 @@ export default function FormDialog({ open, setOpen, task }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Delete</Button>
+          <Button onClick={handleDeletedTask}>Delete</Button>
           <Button onClick={handleEditedTask}>Save</Button>
         </DialogActions>
       </Dialog>
