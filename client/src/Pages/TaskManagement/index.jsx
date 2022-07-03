@@ -1,7 +1,4 @@
 import TaskList from '../../components/TaskList';
-// import axiosInstances from '../../helpers/axiosInstance';
-// import { Navigate } from 'react-router-dom';
-
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,7 +20,6 @@ function TaskManagement() {
   const createTask = async (task) => {
     try {
       const { data } = await axiosInstance.post('/tasks', { ...task });
-      console.log({ data });
       setTasks((prevState) => [...prevState, data]);
     } catch (error) {
       setErro(error?.response?.data?.message || 'Mensagem qualquer');
@@ -108,7 +104,7 @@ function TaskManagement() {
           </Box>
         </Container>
       </ThemeProvider>
-      {erro && <h4>{erro}</h4>}
+      {erro && tasks.length === 0 && <h4>{erro}</h4>}
       <TaskList tasks={tasks} />
     </>
   );
