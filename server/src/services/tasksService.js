@@ -10,8 +10,8 @@ const getAllTasks = async () => {
 const createTask = async (taskContent) => {
   const taskId = await tasksModel.createTask(taskContent);
   if(!taskId) throw ({status: StatusCodes.NOT_ACCEPTABLE, message: 'This operation could not be performed, please try again later.' }); 
-  const newTask = await tasksModel.getTaskById(id);
-  return newTask;
+  const newTask = await tasksModel.getTaskById(taskId);
+  return newTask?.[0];
 };
 
 const updateTask = async (id, taskContent) => {

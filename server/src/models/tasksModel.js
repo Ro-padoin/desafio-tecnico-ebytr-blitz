@@ -14,14 +14,14 @@ const getTaskById = async (id) => {
 
 const createTask = async (taskContent) => {
   const { title, description } = taskContent;
-  const query = `INSERT INTO ScheduleDatabase.tasks (title, description) VALUES (?);`;
+  const query = `INSERT INTO ScheduleDatabase.tasks (title, description) VALUES (?, ?);`;
   const [taskcreated] = await connection.execute(query, [title, description]);
   return taskcreated.insertId; 
 };
 
 const updateTask = async (taskContent) => {
   const { id, title, description  } = taskContent;
-  const query = `UPDATE ScheduleDatabase.tasks SET title = ?, description = ? WHERE id = ?;`;
+  const query = `UPDATE ScheduleDatabase.tasks SET title = ?, description = ?, updatedAt = CURRENT_TIMESTAMP WHERE id = ?;`;
   const [taskUpdated] = await connection.execute(query, [title, description, id]);
   return taskUpdated.affectedRows;
 };

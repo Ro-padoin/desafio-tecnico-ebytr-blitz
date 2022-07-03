@@ -10,29 +10,50 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axiosInstance from '../../helpers/axiosInstance';
 
 const theme = createTheme();
 
 function TaskManagement() {
+  const [erro, setErro] = React.useState();
   const [tasks, setTasks] = React.useState([]);
   const titleRef = React.useRef();
   const descriptionRef = React.useRef();
 
-  const handleSubmit = (event) => {
+  const createTask = async (task) => {
+    try {
+      const { data } = await axiosInstance.post('/tasks', { ...task });
+      console.log({ data });
+      setTasks((prevState) => [...prevState, data]);
+    } catch (error) {
+      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const newTask = {
       title: data.get('title'),
       description: data.get('description'),
     };
-    setTasks((prevState) => [...prevState, newTask]);
-    console.log({
-      title: data.get('title'),
-      description: data.get('description'),
-    });
+    await createTask(newTask);
     if (titleRef.current) titleRef.current.value = '';
     if (descriptionRef.current) descriptionRef.current.value = '';
   };
+
+  const loadTasks = async () => {
+    try {
+      const { data } = await axiosInstance.get('/tasks');
+      setTasks([...data]);
+    } catch (error) {
+      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+    }
+  };
+
+  React.useEffect(() => {
+    loadTasks();
+  }, []);
 
   return (
     <>
@@ -87,6 +108,7 @@ function TaskManagement() {
           </Box>
         </Container>
       </ThemeProvider>
+      {erro && <h4>{erro}</h4>}
       <TaskList tasks={tasks} />
     </>
   );
