@@ -23,3 +23,5 @@ CREATE TABLE
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY(id)
     ) ENGINE = INNODB;
+    
+    

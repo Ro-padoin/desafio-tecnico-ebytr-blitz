@@ -27,6 +27,7 @@ const updateTask = async (req, res, next) => {
     const taskUpdated = await taskService.updateTask(id, body);
     res.status(StatusCodes.OK).json(taskUpdated);
   } catch (error) {
+    console.log(error);
     next(error)
   }
 };
@@ -35,7 +36,7 @@ const deleteTask = async (req, res, next) => {
   try {
     const { id } = req.params;
     await taskService.deleteTask(id);
-    res.status(StatusCodes.ACCEPTED).json(ReasonPhrases.ACCEPTED);
+    res.status(StatusCodes.OK).json({message: ReasonPhrases.OK});
   } catch (error) {
     next(error)
   }

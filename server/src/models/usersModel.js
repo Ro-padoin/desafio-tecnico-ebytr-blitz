@@ -26,7 +26,7 @@ const getUserById = async (id) => {
 };
 
 const getUserByEmail = async (email) => {
-  const query = `SELECT * FROM ScheduleDatabase.users WHERE email = ? `;
+  const query = `SELECT * FROM ScheduleDatabase.users WHERE email = ?;`;
   const [user] = await connection.execute(query, [email]);
   return user?.[0]; 
 };

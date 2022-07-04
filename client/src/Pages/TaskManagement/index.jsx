@@ -1,7 +1,4 @@
 import TaskList from '../../components/TaskList';
-// import axiosInstances from '../../helpers/axiosInstance';
-// import { Navigate } from 'react-router-dom';
-
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,79 +7,110 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axiosInstance from '../../helpers/axiosInstance';
+import { MyContext } from '../../context/MyContext';
 
 const theme = createTheme();
 
 function TaskManagement() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      title: data.get('title'),
-      description: data.get('description'),
-    });
+  const [erro, setErro] = React.useState();
+  const [tasks, setTasks] = React.useState([]);
+
+  const { references, clearFields } = React.useContext(MyContext);
+
+  const createTask = async (task) => {
+    try {
+      const { data } = await axiosInstance.post('/tasks', { ...task });
+      setTasks((prevState) => [...prevState, data]);
+    } catch (error) {
+      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+    }
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const newTask = {
+      title: data.get('title'),
+      description: data.get('description'),
+    };
+    await createTask(newTask);
+    clearFields();
+  };
+
+  const loadTasks = async () => {
+    try {
+      const { data } = await axiosInstance.get('/tasks');
+      setTasks([...data]);
+    } catch (error) {
+      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+    }
+  };
+
+  React.useEffect(() => {
+    loadTasks();
+  }, [tasks]);
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component='h1' variant='h5'>
-            Tasks
-          </Typography>
+    <>
+      <ThemeProvider theme={theme}>
+        <Container component='main' maxWidth='xs'>
+          <CssBaseline />
           <Box
-            component='form'
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              id='title'
-              label='Title'
-              name='title'
-              autoFocus
-            />
-            <TextField
-              margin='normal'
-              fullWidth
-              name='Description'
-              label='Description'
-              type='Description'
-              id='Description'
-              autoComplete='current-password'
-            />
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              sx={{ mt: 3, mb: 2 }}
+            <Typography component='h1' variant='h5'>
+              Tasks
+            </Typography>
+            <Box
+              component='form'
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Register
-            </Button>
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='title'
+                label='Title'
+                name='title'
+                autoFocus
+                inputRef={references.titleRef}
+              />
+              <TextField
+                margin='normal'
+                fullWidth
+                name='description'
+                label='Description'
+                id='description'
+                autoComplete='current-password'
+                inputRef={references.descriptionRef}
+              />
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Register
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-      <TaskList />;
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
+      {erro && tasks.length === 0 && <h4>{erro}</h4>}
+      <TaskList tasks={tasks} loadTasks={loadTasks} />
+    </>
   );
 }
 
-// Visualizar as tarefas;
-// Inserir tarefas; OK
-// Remover tarefas;
-// Atualizar tarefas;
-
+// Remover tarefas; atualizar a tela
 // Status editavel;
 // filtros ordem Alfabetica, data da criacao, status;
 

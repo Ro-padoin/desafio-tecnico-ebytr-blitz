@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../../components/Footer';
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import './style.css';
@@ -34,7 +33,6 @@ function HomePage() {
           <SignUp />
         </div>
       </section>
-      <Footer />
     </section>
   );
 }
