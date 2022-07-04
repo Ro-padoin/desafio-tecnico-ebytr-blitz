@@ -68,6 +68,7 @@ function SignIn() {
           >
             <TextField
               margin='normal'
+              role='email-signin'
               required
               fullWidth
               id='email'
@@ -79,6 +80,7 @@ function SignIn() {
             />
             <TextField
               margin='normal'
+              role='password-signin'
               required
               fullWidth
               name='password'
@@ -93,6 +95,7 @@ function SignIn() {
               label='Remember me'
             /> */}
             <Button
+              role='button-signin'
               type='submit'
               fullWidth
               variant='contained'
