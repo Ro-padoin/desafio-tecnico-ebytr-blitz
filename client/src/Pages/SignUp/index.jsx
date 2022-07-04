@@ -1,4 +1,3 @@
-// import axiosInstances from '../../helpers/axiosInstance';
 import * as React from 'react';
 import axiosInstances from '../../helpers/axiosInstance';
 import Avatar from '@mui/material/Avatar';
@@ -11,24 +10,27 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { MyContext } from '../../context/MyContext';
 
 const theme = createTheme();
 
 function SignUp() {
   const navigate = useNavigate();
-  const [erro, setErro] = React.useState();
+  const [errorDB, setErrorDB] = React.useState();
+
+  const { references, setToken, clearFields } = React.useContext(MyContext);
 
   const fetchApi = async (userData) => {
     try {
-      const { token } = await axiosInstances.post('/signup', { ...userData });
-      console.log(token, erro);
+      const { data } = await axiosInstances.post('/signup', { ...userData });
+      setToken(data);
       navigate('/tasks');
     } catch (error) {
-      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+      setErrorDB(error?.response?.data?.message || 'Mensagem qualquer');
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const userData = {
@@ -37,13 +39,8 @@ function SignUp() {
       email: data.get('email-register'),
       password: data.get('password-register'),
     };
-    console.log({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email-register'),
-      password: data.get('password-register'),
-    });
-    fetchApi(userData);
+    await fetchApi(userData);
+    clearFields();
   };
 
   return (
@@ -78,6 +75,7 @@ function SignUp() {
                   id='firstName'
                   label='First Name'
                   autoFocus
+                  inputRef={references.firstNameRef}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -88,6 +86,7 @@ function SignUp() {
                   label='Last Name'
                   name='lastName'
                   autoComplete='family-name'
+                  inputRef={references.lastNameRef}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,7 +96,8 @@ function SignUp() {
                   id='email-register'
                   label='Email Address'
                   name='email-register'
-                  autoComplete='email-register'
+                  autoComplete='email'
+                  inputRef={references.emailRef}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -109,6 +109,7 @@ function SignUp() {
                   type='password'
                   id='password-register'
                   autoComplete='new-password'
+                  inputRef={references.passwordRef}
                 />
               </Grid>
             </Grid>
@@ -123,12 +124,9 @@ function SignUp() {
           </Box>
         </Box>
       </Container>
+      {errorDB && <h2>{errorDB}</h2>}
     </ThemeProvider>
   );
 }
-
-// encaminha os dados para a rota de auth/signup DB - post
-// DB controller --> Service --> Service cadastra o usuario e ja faz o login
-// Model tera uma funcao para cadastro e outra para login
 
 export default SignUp;

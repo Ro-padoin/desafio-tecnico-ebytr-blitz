@@ -8,7 +8,7 @@ const { email } = data;
 
   const userExists = await usersModel.getUserByEmail(email);
 
-  if (userExists.length > 0) throw ({ status: StatusCodes.BAD_REQUEST, message: 'User already exists.' })
+  if (userExists) throw ({ status: StatusCodes.BAD_REQUEST, message: 'User already exists.' })
 
   const password = await bcrypt.hash(data.password, 8);
 

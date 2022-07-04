@@ -4,40 +4,44 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { MyContext } from '../../context/MyContext';
 
 const theme = createTheme();
 
 function SignIn() {
   const navigate = useNavigate();
-  const [erro, setErro] = React.useState();
+  const [errorDB, setErrorDB] = React.useState();
+
+  const { references, setToken, clearFields } = React.useContext(MyContext);
 
   const fetchApi = async (login) => {
     try {
-      const { token } = await axiosInstances.post('/signin', { ...login });
-      console.log(token, erro);
+      const { data } = await axiosInstances.post('/signin', { ...login });
+      setToken(data);
       navigate('/tasks');
     } catch (error) {
-      setErro(error?.response?.data?.message || 'Mensagem qualquer');
+      setErrorDB(error?.response?.data?.message || 'Mensagem qualquer');
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const login = {
       email: data.get('email'),
       password: data.get('password'),
     };
-    fetchApi(login);
+    await fetchApi(login);
+    clearFields();
   };
 
   return (
@@ -71,6 +75,7 @@ function SignIn() {
               name='email'
               autoComplete='email'
               autoFocus
+              inputRef={references.emailRef}
             />
             <TextField
               margin='normal'
@@ -80,12 +85,13 @@ function SignIn() {
               label='Password'
               type='password'
               id='password'
-              autoComplete='current-password'
+              // autoComplete='current-password'
+              inputRef={references.passwordRef}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value='remember' color='primary' />}
               label='Remember me'
-            />
+            /> */}
             <Button
               type='submit'
               fullWidth
@@ -95,24 +101,23 @@ function SignIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href='#' variant='body2'>
                   Forgot password?
                 </Link>
-              </Grid>
-              <Grid item>
+              </Grid> */}
+              {/* <Grid item>
                 <Link href='#' variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Box>
       </Container>
+      {errorDB && <h2>{errorDB}</h2>}
     </ThemeProvider>
   );
 }
-
-// context para salvar o token
 
 export default SignIn;

@@ -62,5 +62,5 @@ TaskList.propTypes = {
       createdAt: PropTypes.string,
       updatedAt: PropTypes.string,
     }),
-  ).isRequired,
-};
+  ),
+}.isRequired;

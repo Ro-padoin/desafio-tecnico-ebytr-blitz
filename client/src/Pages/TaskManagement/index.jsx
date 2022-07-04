@@ -8,14 +8,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axiosInstance from '../../helpers/axiosInstance';
+import { MyContext } from '../../context/MyContext';
 
 const theme = createTheme();
 
 function TaskManagement() {
   const [erro, setErro] = React.useState();
   const [tasks, setTasks] = React.useState([]);
-  const titleRef = React.useRef();
-  const descriptionRef = React.useRef();
+
+  const { references, clearFields } = React.useContext(MyContext);
 
   const createTask = async (task) => {
     try {
@@ -34,8 +35,7 @@ function TaskManagement() {
       description: data.get('description'),
     };
     await createTask(newTask);
-    if (titleRef.current) titleRef.current.value = '';
-    if (descriptionRef.current) descriptionRef.current.value = '';
+    clearFields();
   };
 
   const loadTasks = async () => {
@@ -49,7 +49,7 @@ function TaskManagement() {
 
   React.useEffect(() => {
     loadTasks();
-  }, []);
+  }, [tasks]);
 
   return (
     <>
@@ -81,7 +81,7 @@ function TaskManagement() {
                 label='Title'
                 name='title'
                 autoFocus
-                inputRef={titleRef}
+                inputRef={references.titleRef}
               />
               <TextField
                 margin='normal'
@@ -90,7 +90,7 @@ function TaskManagement() {
                 label='Description'
                 id='description'
                 autoComplete='current-password'
-                inputRef={descriptionRef}
+                inputRef={references.descriptionRef}
               />
               <Button
                 type='submit'
@@ -105,16 +105,12 @@ function TaskManagement() {
         </Container>
       </ThemeProvider>
       {erro && tasks.length === 0 && <h4>{erro}</h4>}
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} loadTasks={loadTasks} />
     </>
   );
 }
 
-// Visualizar as tarefas;
-// Inserir tarefas; OK
-// Remover tarefas;
-// Atualizar tarefas;
-
+// Remover tarefas; atualizar a tela
 // Status editavel;
 // filtros ordem Alfabetica, data da criacao, status;
 

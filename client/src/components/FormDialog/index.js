@@ -4,7 +4,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import axiosInstance from '../../helpers/axiosInstance';
@@ -17,9 +16,9 @@ export default function FormDialog({ open, setOpen, task }) {
   });
   const [erro, setErro] = useState();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -28,6 +27,7 @@ export default function FormDialog({ open, setOpen, task }) {
   const handleDeletedTask = async () => {
     try {
       await axiosInstance.delete(`/tasks/${editedTask.id}`);
+      handleClose();
     } catch (error) {
       setErro(error?.response?.data?.message || 'Mensagem qualquer');
     }
@@ -35,6 +35,7 @@ export default function FormDialog({ open, setOpen, task }) {
 
   const handleEditedTask = async () => {
     try {
+      console.log({ editedTask });
       const { data } = await axiosInstance.put(`/tasks/${editedTask.id}`, {
         ...editedTask,
       });
@@ -43,6 +44,7 @@ export default function FormDialog({ open, setOpen, task }) {
         title: data.title,
         description: data.description,
       }));
+      handleClose();
     } catch (error) {
       setErro(error?.response?.data?.message || 'Mensagem qualquer');
     }
