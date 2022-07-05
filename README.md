@@ -132,7 +132,7 @@ OBS: o Heroku utilizado para este projeto pertence a minha conta pessoal, e com 
 
 ---
 
-### 2 - Back-End em NodeJS, com MySQL;
+### 2 - Back-End em NodeJS, com MySQL
 
 ---
 
@@ -147,26 +147,26 @@ OBS: o Heroku utilizado para este projeto pertence a minha conta pessoal, e com 
 
 <br/>
 
-### 1 - Visualizar a lista de tarefas;
+### 1 - Visualizar a lista de tarefas
 
 ---
 
-### 2 - Inserir uma nova tarefa na lista;
+### 2 - Inserir uma nova tarefa na lista
 
 ---
 
-### 3 - Atualizar uma tarefa da lista;
+### 3 - Atualizar uma tarefa da lista
 
 ---
 
-### 4 - Remover uma tarefa da lista;
+### 4 - Remover uma tarefa da lista
 
 ---
 
-### 5 - Status editável: pendente, em andamento ou concluído;
+### 5 - Status editável: pendente, em andamento ou concluído
 
 ---
 
-### 6 - deve ser ordenável por ordem alfabética, data de criação ou por status.
+### 6 - deve ser ordenável por ordem alfabética, data de criação ou por status - não finalizado.
 
 ---
