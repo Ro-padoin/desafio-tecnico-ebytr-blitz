@@ -163,7 +163,7 @@ OBS: o Heroku utilizado para este projeto pertence a minha conta pessoal, e com 
 
 ---
 
-### 5 - Status editável: pendente, em andamento ou concluído
+### 5 - Status editável: pendente, em andamento ou concluído - não finalizado
 
 ---
 
