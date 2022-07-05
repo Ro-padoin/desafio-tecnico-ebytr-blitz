@@ -5,7 +5,7 @@
 
 ## Descricao do Projeto
 
-Desenvolvimento de um CRUD de uma aplicação Frontend e Backend para organização de tarefas diárias utilizando a stack: React, NodeJS, Express e MySql. Atendendo aos requisitos e funcionalidades elencadas neste documento.
+Desenvolvimento de um CRUD de uma aplicação Frontend e Backend para organização de tarefas diárias utilizando a stack: React, NodeJS, Express e MySql, atendendo aos requisitos e funcionalidades elencadas neste documento.
 
 <br/>
 
