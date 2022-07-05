@@ -59,7 +59,7 @@ Este projeto possui duas pastas:
 
  - server: desenvolvimento Backend. 
 
-Para instalar as dependencias necessárias para executar a aplicação, você precisará acessar cada pasta e rodar o comando abaico em cada uma delas:
+Para instalar as dependencias necessárias para executar a aplicação, você precisará acessar cada pasta e rodar o comando abaixo em cada uma delas:
 
 `npm install`
 
