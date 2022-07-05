@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { configJWT } = require('../helpers/generateToken');
 require('dotenv').config();
 
-const secretKey = process.env.JWT_SECRET  || '@SAayamUfwkZ$2csG$ynYNC#HE';
+const secretKey = process.env.JWT_SECRET  || '@SAayamUfwkZ$2csG$ynYNC#H';
 
 const validateAuth = (req, _res, next) => {
     const token = req.headers.authorization;
