@@ -78,6 +78,7 @@ function TaskManagement() {
                 required
                 fullWidth
                 id='title'
+                role='title'
                 label='Title'
                 name='title'
                 autoFocus
@@ -87,6 +88,7 @@ function TaskManagement() {
                 margin='normal'
                 fullWidth
                 name='description'
+                role='description'
                 label='Description'
                 id='description'
                 autoComplete='current-password'
@@ -94,6 +96,7 @@ function TaskManagement() {
               />
               <Button
                 type='submit'
+                role='button-register'
                 fullWidth
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}

@@ -36,6 +36,7 @@ export default function TaskList({ tasks }) {
                     setOpen(true);
                     setSelectedTask(task);
                   }}
+                  role='list-group'
                 >
                   <ListItemText
                     primary={`Title: ${task.title}`}

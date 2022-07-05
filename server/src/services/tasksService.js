@@ -23,9 +23,9 @@ const updateTask = async (id, taskContent) => {
 };
 
 const deleteTask = async (id) => {
-  const taskDeleted = await tasksModel.deleteTask(id);
-  if (taskDeleted === 0) throw ({status: StatusCodes.NOT_ACCEPTABLE, message: 'This operation could not be performed, please try again later.'});
-  return;
+  const affectedRows = await tasksModel.deleteTask(id);
+  if (!affectedRows) throw ({status: StatusCodes.NOT_ACCEPTABLE, message: 'This operation could not be performed, please try again later.'});
+  return true;
 };
 
 module.exports = {

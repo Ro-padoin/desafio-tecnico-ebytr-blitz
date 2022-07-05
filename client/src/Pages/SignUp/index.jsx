@@ -59,12 +59,7 @@ function SignUp() {
           <Typography component='h1' variant='h5'>
             Sign up
           </Typography>
-          <Box
-            component='form'
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component='form' onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -73,6 +68,7 @@ function SignUp() {
                   required
                   fullWidth
                   id='firstName'
+                  role='firstName'
                   label='First Name'
                   autoFocus
                   inputRef={references.firstNameRef}
@@ -85,6 +81,7 @@ function SignUp() {
                   id='lastName'
                   label='Last Name'
                   name='lastName'
+                  role='lastName'
                   autoComplete='family-name'
                   inputRef={references.lastNameRef}
                 />
@@ -96,6 +93,7 @@ function SignUp() {
                   id='email-register'
                   label='Email Address'
                   name='email-register'
+                  role='email-register'
                   autoComplete='email'
                   inputRef={references.emailRef}
                 />
@@ -105,6 +103,7 @@ function SignUp() {
                   required
                   fullWidth
                   name='password-register'
+                  role='password-register'
                   label='Password'
                   type='password'
                   id='password-register'
@@ -115,6 +114,7 @@ function SignUp() {
             </Grid>
             <Button
               type='submit'
+              role='button-signup'
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}

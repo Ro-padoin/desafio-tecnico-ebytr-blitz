@@ -1,5 +1,5 @@
 import * as React from 'react';
-import axiosInstances from '../../helpers/axiosInstance';
+import axiosInstance from '../../helpers/axiosInstance';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -25,7 +25,7 @@ function SignIn() {
 
   const fetchApi = async (login) => {
     try {
-      const { data } = await axiosInstances.post('/signin', { ...login });
+      const { data } = await axiosInstance.post('/signin', { ...login });
       setToken(data);
       navigate('/tasks');
     } catch (error) {
@@ -60,12 +60,7 @@ function SignIn() {
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
-          <Box
-            component='form'
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin='normal'
               role='email-signin'

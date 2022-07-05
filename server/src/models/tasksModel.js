@@ -22,14 +22,14 @@ const createTask = async (taskContent) => {
 const updateTask = async (id, taskContent) => {
   const { title, description } = taskContent;
   const query = `UPDATE ScheduleDatabase.tasks SET title = ?, description = ?, updatedAt = CURRENT_TIMESTAMP WHERE id = ?;`;
-  const [taskUpdated] = await connection.execute(query, [String(title), String(description), id]);
-  return taskUpdated.affectedRows;
+  await connection.execute(query, [String(title), String(description), id]);
+  return true;
 };
 
 const deleteTask = async (id) => {
   const query = `DELETE FROM ScheduleDatabase.tasks WHERE id = ?;`;
-  const [taskDeleted] = await connection.execute(query, [id]);
-  return taskDeleted.affectedRows;
+  await connection.execute(query, [id]);
+  return true;
 };
 
 module.exports = {
