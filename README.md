@@ -101,7 +101,7 @@ Para executar os testes é necessário executar o comando abaixo em cada uma das
 
 Para verificar a cobertura de testes, estando disponivel somente em Backend, execute o comando abaixo na pasta server:
 
-OBS: importante salientar que os  testes devem ser rodados com o servidor executando.
+OBS: importante salientar que os  testes devem ser rodados com o servidor rodando.
 
 `npm run test:coverage`
 
