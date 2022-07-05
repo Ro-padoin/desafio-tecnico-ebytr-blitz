@@ -117,7 +117,7 @@ Foi utilizado o Heroku para realizar o deploy desta aplicação. Há um servidor
 A aplicação pode ser acessada no link abaixo:
 [Link Aplicação.](https://blitz-ebytr-frontend.herokuapp.com/)
 
-OBS: o Heroku utilizado para este projeto pertence a minha conta pessoal, e com isso não é possível a realização de deploys de terceiros. Os comandos abaixo 
+OBS: o Heroku utilizado para este projeto pertence a minha conta pessoal, e com isso não é possível a realização de deploys de terceiros. Porém após o deploy feito, a cada alteração faz-se necessário executar a sequencia de comandos: git add . | git commit -m "texto commit" | git push heroku "sua_branch":"branch_heroku" (geralmente será git push heroku main:main).
 
 <br/>
 
