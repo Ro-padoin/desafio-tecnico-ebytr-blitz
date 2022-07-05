@@ -18,7 +18,7 @@ Desenvolvimento de um CRUD de uma aplicação Frontend e Backend para organizaç
 - JsonWebToken;
 - Eslint;
 - React;
-- Joi;
+- MUI;
 - Heroku: Deploy.
 
 <br/>
